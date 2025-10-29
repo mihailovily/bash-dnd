@@ -301,7 +301,6 @@ explore_room() {
             *)
                 move_player "$input"
                 
-                # Автоматическая проверка взаимодействия при наступании
                 check_interaction
                 local auto_interact=$?
                 
@@ -313,7 +312,7 @@ explore_room() {
                         5)  # Зелье
                             POTIONS=$((POTIONS + 1))
                             echo ""
-                            echo "🧪 Ты подобрал зелье лечения!"
+                            echo "🧪 Ты подобрал кофе!"
                             sleep 1
                             ;;
                     esac

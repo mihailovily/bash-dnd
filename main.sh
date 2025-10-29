@@ -234,7 +234,7 @@ handle_chest_in_room() {
 handle_monster_in_room() {
     clear
     echo "╔═══════════════════════════════════════════════════╗"
-    echo "║              👹 МОНСТР! 👹                        ║"
+    echo "║              👹 Преподаватель! 👹                ║"
     echo "╚═══════════════════════════════════════════════════╝"
     echo ""
     
@@ -260,7 +260,7 @@ handle_monster_in_room() {
     echo "Перед тобой появляется $monster_name!"
     echo "HP: $monster_hp | Урон: ~$monster_dmg"
     echo ""
-    read -p "Нажми Enter, чтобы начать бой..."
+    read -p "Нажми Enter, чтобы начать пересдачу..."
     
     fight_monster $monster_hp $monster_dmg "$monster_name"
     local result=$?
@@ -269,7 +269,7 @@ handle_monster_in_room() {
         local potion_drop=$((RANDOM % 100))
         if [ $potion_drop -lt 30 ]; then
             echo ""
-            echo "🧪 Монстр выронил зелье лечения!"
+            echo "🧪 Преподаватель не забрал кофе из автомата!"
             POTIONS=$((POTIONS + 1))
             sleep 1
         fi
@@ -283,7 +283,7 @@ handle_monster_in_room() {
 handle_boss_in_room() {
     clear
     echo "╔═══════════════════════════════════════════════════╗"
-    echo "║           💀 БОСС ПОДЗЕМЕЛЬЯ! 💀                  ║"
+    echo "║           💀 Ты попал на проходную! 💀           ║"
     echo "╚═══════════════════════════════════════════════════╝"
     echo ""
     echo "      .-."
@@ -310,7 +310,7 @@ handle_boss_in_room() {
         GOLD=$((GOLD + gold_reward))
         echo "💰 Ты получаешь $gold_reward золота!"
         POTIONS=$((POTIONS + 2))
-        echo "🧪 Ты находишь 2 зелья лечения!"
+        echo "🧪 В будке охраны ты находишь 2 стакана кофе!"
         sleep 2
     fi
     
