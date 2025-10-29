@@ -1,19 +1,14 @@
 #!/bin/bash
 
-# Dungeon Crawler - главный файл
-# Запуск: chmod +x main.sh && ./main.sh
-
 source ./config.sh
-source ./graphics.sh
 source ./combat.sh
-source ./events.sh
 source ./map.sh
 
 # Инициализация игрока
 init_player() {
     HP=$MAX_HP
     GOLD=0
-    WEAPON="Ржавый меч"
+    WEAPON="Рваная зачетка"
     WEAPON_DMG=5
     ROOMS_CLEARED=0
     POTIONS=2
@@ -22,7 +17,13 @@ init_player() {
 # Главное меню
 show_menu() {
     clear
-    draw_title
+    echo "╔═══════════════════════════════════════════════════╗"
+    echo "║                                                   ║"
+    echo "║                 Подземелья Бонча                  ║"
+    echo "║                                                   ║"
+    echo "║            Сдай долги, найди выход                ║"
+    echo "║                                                   ║"
+    echo "╚═══════════════════════════════════════════════════╝"
     echo ""
     echo "  1) Начать новую игру"
     echo "  2) Правила игры"
@@ -45,7 +46,7 @@ show_rules() {
     echo "║              ПРАВИЛА ИГРЫ                         ║"
     echo "╚═══════════════════════════════════════════════════╝"
     echo ""
-    echo "Цель: Пройти $ROOMS_TO_WIN комнат и найти выход из подземелья!"
+    echo "Цель: Пройти $ROOMS_TO_WIN комнат и найти выход из Бонча!"
     echo ""
     echo "Управление:"
     echo "  W/A/S/D - движение"
@@ -62,17 +63,6 @@ show_rules() {
     echo "  + - двери (ведут в другие комнаты)"
     echo "  H - зелье лечения"
     echo ""
-    echo "В комнатах:"
-    echo "  • Избегай или сражайся с монстрами"
-    echo "  • Открывай сундуки (могут быть ловушки)"
-    echo "  • Собирай зелья для восстановления HP"
-    echo "  • Используй двери для перехода в другие комнаты"
-    echo ""
-    echo "Параметры:"
-    echo "  • HP - твоё здоровье (если 0 - конец игры)"
-    echo "  • Золото - собирай для улучшений"
-    echo "  • Оружие - чем лучше, тем больше урон"
-    echo ""
     read -p "Нажми Enter для возврата в меню..."
     show_menu
 }
@@ -82,7 +72,7 @@ start_game() {
     init_player
     clear
     echo "╔═══════════════════════════════════════════════════╗"
-    echo "║          ДОБРО ПОЖАЛОВАТЬ В ПОДЗЕМЕЛЬЕ!           ║"
+    echo "║             ДОБРО ПОЖАЛОВАТЬ В БОНЧ!              ║"
     echo "╚═══════════════════════════════════════════════════╝"
     echo ""
     echo "Ты просыпаешься в тёмном подземелье..."
@@ -168,7 +158,16 @@ handle_chest_in_room() {
     echo "║              📦 СУНДУК! 📦                        ║"
     echo "╚═══════════════════════════════════════════════════╝"
     echo ""
-    draw_chest
+    echo "        __________"
+    echo "       /\\____;;___\\"
+    echo "      | /         /"
+    echo "      \\/          \\"
+    echo "      |  .--. .--.|"
+    echo "      |  |o_o||o_o||"
+    echo "      |  |:_/||:_/ |"
+    echo "      |             |"
+    echo "      |     ---     |"
+    echo "      |_____________|"
     echo ""
     echo "Ты подходишь к сундуку..."
     echo ""
@@ -213,7 +212,7 @@ handle_chest_in_room() {
             
             echo ""
             echo "⚔️  Ты находишь новое оружие: $new_weapon!"
-            echo "Урон: $new_dmg (текущее: $WEAPON_DMG)"
+            echo "Убеждение: $new_dmg (текущее: $WEAPON_DMG)"
             echo ""
             read -p "Забрать это оружие? (д/н): " take
             
@@ -244,7 +243,19 @@ handle_monster_in_room() {
     local monster_hp="${MONSTER_HP[$idx]}"
     local monster_dmg="${MONSTER_DMG[$idx]}"
     
-    draw_monster
+    echo "         .-."
+    echo "        (o.o)"
+    echo "         |=|"
+    echo "        __|__"
+    echo "      //.=|=.\\\\"
+    echo "     // .=|=. \\\\"
+    echo "     \\\\ .=|=. //"
+    echo "      \\\\(_=_)//"
+    echo "       (:| |:)"
+    echo "        || ||"
+    echo "        () ()"
+    echo "        || ||"
+    echo "        || ||"
     echo ""
     echo "Перед тобой появляется $monster_name!"
     echo "HP: $monster_hp | Урон: ~$monster_dmg"
@@ -285,16 +296,16 @@ handle_boss_in_room() {
     echo "   \\\\_=_//    '-----'"
     echo ""
     echo "Огромное существо преграждает тебе путь!"
-    echo "Это охранник подземелья!"
+    echo "Это охранник вуза! Предъяви пропуск!"
     echo ""
-    read -p "Нажми Enter, чтобы начать эпичный бой..."
+    read -p "Нажми Enter, чтобы прорваться без пропуска..."
     
-    fight_monster 80 15 "Страж Подземелья"
+    fight_monster 80 15 "Охранник Бонча"
     local result=$?
     
     if [ $result -eq 0 ]; then
         echo ""
-        echo "🏆 Ты победил босса!"
+        echo "🏆 Ты победил охранника!"
         local gold_reward=$((50 + RANDOM % 50))
         GOLD=$((GOLD + gold_reward))
         echo "💰 Ты получаешь $gold_reward золота!"
@@ -318,14 +329,13 @@ show_status() {
 # Победа
 victory() {
     clear
-    draw_victory
     echo ""
     echo "╔═══════════════════════════════════════════════════╗"
-    echo "║            🎉 ПОЗДРАВЛЯЕМ! 🎉                     ║"
+    echo "║            🎉 Без долгов! 🎉                     ║"
     echo "╚═══════════════════════════════════════════════════╝"
     echo ""
-    echo "Ты смог выбраться из подземелья!"
-    echo "Пройдено комнат: $ROOMS_CLEARED"
+    echo "Ты смог закрыть долги и выбраться из Бонча!"
+    echo "Пройдено аудиторий: $ROOMS_CLEARED"
     echo "Собрано золота: $GOLD"
     echo "Осталось HP: $HP/$MAX_HP"
     echo ""
@@ -336,13 +346,12 @@ victory() {
 # Конец игры
 game_over() {
     clear
-    draw_game_over
     echo ""
     echo "╔═══════════════════════════════════════════════════╗"
-    echo "║              💀 GAME OVER 💀                      ║"
+    echo "║              💀 Потерялся 💀                     ║"
     echo "╚═══════════════════════════════════════════════════╝"
     echo ""
-    echo "Ты пал в бою..."
+    echo "Ты не справился с пересдачей..."
     echo "Пройдено комнат: $ROOMS_CLEARED/$ROOMS_TO_WIN"
     echo "Собрано золота: $GOLD"
     echo ""

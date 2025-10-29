@@ -9,7 +9,7 @@ fight_monster() {
     
     echo ""
     echo "╔═══════════════════════════════════════════════════╗"
-    echo "║              ⚔️  БОЙ! ⚔️                         ║"
+    echo "║              ⚔️  Защита лабы! ⚔️                         ║"
     echo "╚═══════════════════════════════════════════════════╝"
     echo ""
     
@@ -19,10 +19,10 @@ fight_monster() {
         echo "  👹 $m_name HP: $m_hp"
         echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
         echo ""
-        echo "1) Атаковать"
+        echo "1) Защищать"
         echo "2) Попытаться сбежать"
         if [ $POTIONS -gt 0 ]; then
-            echo "3) Использовать зелье лечения (осталось: $POTIONS)"
+            echo "3) Использовать кофе (осталось: $POTIONS)"
         fi
         echo ""
         read -p "Твоё действие: " action
@@ -35,11 +35,11 @@ fight_monster() {
                     local dmg=$((WEAPON_DMG + RANDOM % 5))
                     m_hp=$((m_hp - dmg))
                     echo ""
-                    echo "⚔️  Ты наносишь $dmg урона! ($WEAPON)"
+                    echo "⚔️  Ты наносишь $dmg убеждения! ($WEAPON)"
                     
                     if [ $m_hp -le 0 ]; then
                         echo ""
-                        echo "✅ $m_name повержен!"
+                        echo "✅ $m_name убежден!"
                         local gold_reward=$((10 + RANDOM % 20))
                         GOLD=$((GOLD + gold_reward))
                         echo "💰 Ты получаешь $gold_reward золота!"
@@ -48,7 +48,7 @@ fight_monster() {
                     fi
                 else
                     echo ""
-                    echo "❌ Промах! Твой удар не достиг цели!"
+                    echo "❌ Промах! Твой довод не достиг цели!"
                 fi
                 
                 sleep 1
@@ -62,7 +62,7 @@ fight_monster() {
                     
                     if [ $HP -le 0 ]; then
                         echo ""
-                        echo "💀 Ты пал в бою..."
+                        echo "💀 Ты пал на лабе..."
                         sleep 2
                         return 1
                     fi
@@ -92,7 +92,7 @@ fight_monster() {
                     
                     if [ $HP -le 0 ]; then
                         echo ""
-                        echo "💀 Ты пал в бою..."
+                        echo "💀 Ты пал на лабе..."
                         sleep 2
                         return 1
                     fi
@@ -110,13 +110,13 @@ fight_monster() {
                     fi
                     POTIONS=$((POTIONS - 1))
                     echo ""
-                    echo "🧪 Ты выпиваешь зелье и восстанавливаешь $heal HP!"
+                    echo "🧪 Ты выпиваешь кофе и восстанавливаешь $heal HP!"
                     
                     # Монстр атакует
                     sleep 1
                     local m_damage=$((m_dmg + RANDOM % 3))
                     HP=$((HP - m_damage))
-                    echo "💥 $m_name использует момент и наносит $m_damage урона!"
+                    echo "💥 $m_name пользуется возможностью и наносит $m_damage урона!"
                     
                     if [ $HP -le 0 ]; then
                         echo ""
@@ -127,7 +127,7 @@ fight_monster() {
                     
                     sleep 2
                 else
-                    echo "У тебя нет зелий!"
+                    echo "У тебя нет кофе!"
                     sleep 1
                 fi
                 ;;
@@ -140,7 +140,7 @@ fight_monster() {
         
         clear
         echo "╔═══════════════════════════════════════════════════╗"
-        echo "║              ⚔️  БОЙ! ⚔️                          ║"
+        echo "║              ⚔️  Защита лабы! ⚔️                 ║"
         echo "╚═══════════════════════════════════════════════════╝"
     done
 }
