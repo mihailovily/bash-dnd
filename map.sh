@@ -236,18 +236,6 @@ move_player() {
     return 0
 }
 
-# Показ легенды
-show_legend() {
-    echo ""
-    echo "  Легенда:"
-    echo "  @ - ты         # - стена      ? - сундук"
-    echo "  M - монстр     B - босс       E - выход"
-    echo "  H - зелье      + - дверь"
-    echo ""
-    echo "  Управление: W/A/S/D (или Ц/Ф/Ы/В)"
-    echo "  E - взаимодействовать    Q - выход в меню"
-    echo ""
-}
 
 # Основной цикл исследования комнаты
 explore_room() {
@@ -261,7 +249,7 @@ explore_room() {
         clear
         show_status
         draw_room
-        show_legend
+        
         
         read -n1 -s input
         
@@ -290,7 +278,7 @@ explore_room() {
                     5)  # Зелье
                         POTIONS=$((POTIONS + 1))
                         echo ""
-                        echo "🧪 Ты подобрал зелье лечения!"
+                        echo "🧪 Ты подобрал кофе!"
                         sleep 1
                         ;;
                     6)  # Дверь
